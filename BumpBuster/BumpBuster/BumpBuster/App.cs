@@ -1,5 +1,4 @@
-﻿using BumpBuster.Views;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,11 +12,24 @@ namespace BumpBuster
         public App()
         {
             // The root page of your application
-            MainPage = new MainPage();
+            MainPage = new ContentPage
+            {
+                Content = new StackLayout
+                {
+					VerticalOptions = LayoutOptions.CenterAndExpand,
+                    Children = {
+                        new Label {
+                            XAlign = TextAlignment.Center,
+                            Text = "Welcome to Xamarin Forms!"
+                        }
+                    }
+                }
+            };
         }
 
         protected override void OnStart()
         {
+			Teste ();
             // Handle when your app starts
         }
 
@@ -30,5 +42,12 @@ namespace BumpBuster
         {
             // Handle when your app resumes
         }
+
+
+		protected void Teste(){
+
+			var numero = 0;
+		
+		}
     }
 }
