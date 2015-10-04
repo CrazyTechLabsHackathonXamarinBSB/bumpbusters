@@ -23,6 +23,11 @@ namespace BumpBuster.Models
 			get;
 			set;
 		}
+
+		public bool Active {
+			get;
+			set;
+		}
 	}
 }
 
