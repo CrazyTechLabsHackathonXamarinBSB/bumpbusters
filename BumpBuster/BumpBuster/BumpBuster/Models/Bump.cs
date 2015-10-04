@@ -19,7 +19,7 @@ namespace BumpBuster.Models
 			set;
 		}
 
-		public BumpSeverity Severity {
+		public int Severity {
 			get;
 			set;
 		}
