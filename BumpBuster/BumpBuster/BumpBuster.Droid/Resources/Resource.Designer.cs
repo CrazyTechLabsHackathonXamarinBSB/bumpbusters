@@ -1736,8 +1736,11 @@ namespace BumpBuster.Droid
 			// aapt resource value: 0x7f02007d
 			public const int mr_ic_settings_light = 2130837629;
 			
+			// aapt resource value: 0x7f02007f
+			public const int notification_template_icon_bg = 2130837631;
+			
 			// aapt resource value: 0x7f02007e
-			public const int notification_template_icon_bg = 2130837630;
+			public const int splash = 2130837630;
 			
 			static Drawable()
 			{
@@ -2932,8 +2935,8 @@ namespace BumpBuster.Droid
 			// aapt resource value: 0x7f070128
 			public const int CalendarTitle = 2131165480;
 			
-			// aapt resource value: 0x7f07012c
-			public const int Mono_Android_Theme_Splash = 2131165484;
+			// aapt resource value: 0x7f07012d
+			public const int Mono_Android_Theme_Splash = 2131165485;
 			
 			// aapt resource value: 0x7f070014
 			public const int Platform_AppCompat = 2131165204;
@@ -3198,6 +3201,9 @@ namespace BumpBuster.Droid
 			
 			// aapt resource value: 0x7f070001
 			public const int Theme_MediaRouter_Light = 2131165185;
+			
+			// aapt resource value: 0x7f07012c
+			public const int Theme_Splash = 2131165484;
 			
 			// aapt resource value: 0x7f0700e2
 			public const int ThemeOverlay_AppCompat = 2131165410;
