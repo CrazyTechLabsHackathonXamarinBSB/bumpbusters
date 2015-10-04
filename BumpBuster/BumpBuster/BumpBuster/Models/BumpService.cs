@@ -29,7 +29,7 @@ namespace BumpBuster.Models
 			return result.ToList();
 		}
 
-		public async Task AddAsync(double latitude, double longitude, BumpSeverity severity) {
+		public async Task AddAsync(double latitude, double longitude, int severity) {
 			var item = new Bump {
 				Severity = (int)severity,
 				Latitude = latitude,
