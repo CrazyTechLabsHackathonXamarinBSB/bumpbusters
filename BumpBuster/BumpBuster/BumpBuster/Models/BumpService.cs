@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.WindowsAzure.MobileServices;
@@ -20,7 +21,12 @@ namespace BumpBuster.Models
 		}
 
 		public async Task<List<Bump>> ListAsync() {
-			return await Table.ToListAsync ();
+			var list = await Table.ToListAsync ();
+			var result = from i in list
+				group i by new { X =  Math.Round(i.Latitude, 2), Y = Math.Round(i.Longitude, 2) } into g
+				select g.First();
+
+			return result.ToList();
 		}
 
 		public async Task AddAsync(double latitude, double longitude, BumpSeverity severity) {
