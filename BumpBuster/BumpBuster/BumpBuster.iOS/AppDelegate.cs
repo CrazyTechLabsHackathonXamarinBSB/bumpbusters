@@ -24,6 +24,7 @@ namespace BumpBuster.iOS
         {
             global::Xamarin.Forms.Forms.Init();
 			global::Xamarin.FormsMaps.Init();
+			global::Microsoft.WindowsAzure.MobileServices.CurrentPlatform.Init ();
 
             LoadApplication(new App());
 

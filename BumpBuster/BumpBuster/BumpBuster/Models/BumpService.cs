@@ -1,25 +1,46 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+using Microsoft.WindowsAzure.MobileServices;
 
 namespace BumpBuster.Models
 {
 	public class BumpService
 	{
-		public Bump[] List() {
-			return new [] {
-				new Bump {
-					Severity = BumpSeverity.Light,
-					Latitude = 33.0,
-					Longitude = 33.0
-				}
+		private IMobileServiceTable<Bump> Table {
+			get {
+				var url = @"https://bumpbuster.azure-mobile.net/";
+				var key = "";
+
+				var service = new MobileServiceClient(url, key);
+
+				return service.GetTable<Bump>();
+			}
+		}
+
+		public async Task<List<Bump>> ListAsync() {
+			return await Table.ToListAsync ();
+		}
+
+		public async Task AddAsync(double latidute, double longitude, BumpSeverity severity) {
+			var item = new Bump {
+				Severity = severity,
+				Latitude = latidute,
+				Longitude = longitude
 			};
+				
+			await Table.InsertAsync(item);
 		}
 
-		public void Add(double latidute, double longitude, BumpSeverity severity) {
-			
-		}
+		public async Task DeleteAsync(double latidute, double longitude) {
+			var item = new Bump {
+				Severity = BumpSeverity.None,
+				Latitude = latidute,
+				Longitude = longitude
+			};
 
-		public void Remove(double latidute, double longitude) {
-
+			await Table.DeleteAsync(item);
 		}
 	}
 }
