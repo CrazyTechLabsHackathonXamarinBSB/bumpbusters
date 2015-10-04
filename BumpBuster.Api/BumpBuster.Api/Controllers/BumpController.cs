@@ -19,32 +19,32 @@ namespace BumpBuster.Api.Controllers
         }
 
         // GET tables/TodoItem
-        public IQueryable<Bump> GetAllBumps()
+        public IQueryable<Bump> Get()
         {
             return Query();
         }
 
         // GET tables/TodoItem/48D68C86-6EA6-4C25-AA33-223FC9A27959
-        public SingleResult<Bump> GetTodoItem(string id)
+        public SingleResult<Bump> Get(string id)
         {
             return Lookup(id);
         }
 
         // PATCH tables/Bump/
-        public Task<Bump> PatchTodoItem(string id, Delta<Bump> patch)
+        public Task<Bump> Patch(string id, Delta<Bump> patch)
         {
             return UpdateAsync(id, patch);
         }
 
         // POST tables/bump
-        public async Task<IHttpActionResult> PostBump(Bump item)
+        public async Task<IHttpActionResult> Post(Bump item)
         {
             Bump current = await InsertAsync(item);
             return CreatedAtRoute("Tables", new { id = current.Id }, current);
         }
 
         // DELETE tables/bump/48D68C86-6EA6-4C25-AA33-223FC9A27959
-        public Task DeleteBump(string id)
+        public Task Delete(string id)
         {
             // return DeleteAsync(id);
             return null;
