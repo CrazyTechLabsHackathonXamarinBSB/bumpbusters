@@ -30,6 +30,7 @@ namespace BumpBuster
 			var list = service.ListAsync();
 			var result = list.Result;
 
+
 			// var result = new string[] { "Item 1" };
 
 			listView.ItemsSource = result;

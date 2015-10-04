@@ -8,5 +8,6 @@ namespace BumpBuster.Models
 		Average = 2,
 		Hard = 3
 	}
+
 }
 
