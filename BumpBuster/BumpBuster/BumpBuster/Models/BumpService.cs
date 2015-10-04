@@ -11,7 +11,7 @@ namespace BumpBuster.Models
 		private IMobileServiceTable<Bump> Table {
 			get {
 				var url = @"https://bumpbuster.azure-mobile.net/";
-				var key = "";
+				var key = "FLsNwBhhZNocetZezcHyIkmVaCNZUM45";
 
 				var service = new MobileServiceClient(url, key);
 
