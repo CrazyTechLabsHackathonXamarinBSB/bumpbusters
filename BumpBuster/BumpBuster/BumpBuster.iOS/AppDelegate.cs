@@ -22,7 +22,14 @@ namespace BumpBuster.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
-            global::Xamarin.Forms.Forms.Init();
+			Xamarin.Forms.DependencyService.Register<XLabs.Platform.Services.Geolocation.Geolocator> ();
+
+			var container = new XLabs.Ioc.SimpleContainer ();
+			container.Register<XLabs.Platform.Device.IDevice> (t => XLabs.Platform.Device.AppleDevice.CurrentDevice);
+
+			XLabs.Ioc.Resolver.SetResolver (container.GetResolver ());
+
+			global::Xamarin.Forms.Forms.Init();
 			global::Xamarin.FormsMaps.Init();
 			global::Microsoft.WindowsAzure.MobileServices.CurrentPlatform.Init ();
 

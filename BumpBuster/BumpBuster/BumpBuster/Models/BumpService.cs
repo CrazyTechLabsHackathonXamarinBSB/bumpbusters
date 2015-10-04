@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.WindowsAzure.MobileServices;
@@ -11,7 +12,7 @@ namespace BumpBuster.Models
 		private IMobileServiceTable<Bump> Table {
 			get {
 				var url = @"https://bumpbuster.azure-mobile.net/";
-				var key = "";
+				var key = "FLsNwBhhZNocetZezcHyIkmVaCNZUM45";
 
 				var service = new MobileServiceClient(url, key);
 
@@ -20,27 +21,34 @@ namespace BumpBuster.Models
 		}
 
 		public async Task<List<Bump>> ListAsync() {
-			return await Table.ToListAsync ();
+			var list = await Table.ToListAsync ();
+			var result = from i in list
+				group i by new { X =  Math.Round(i.Latitude, 2), Y = Math.Round(i.Longitude, 2) } into g
+				select g.First();
+
+			return result.ToList();
 		}
 
-		public async Task AddAsync(double latidute, double longitude, BumpSeverity severity) {
+		public async Task AddAsync(double latitude, double longitude, int severity) {
 			var item = new Bump {
-				Severity = severity,
-				Latitude = latidute,
-				Longitude = longitude
+				Severity = (int)severity,
+				Latitude = latitude,
+				Longitude = longitude,
+				Active = true
 			};
 				
 			await Table.InsertAsync(item);
 		}
 
-		public async Task DeleteAsync(double latidute, double longitude) {
+		public async Task DeleteAsync(double latitude, double longitude) {
 			var item = new Bump {
-				Severity = BumpSeverity.None,
-				Latitude = latidute,
-				Longitude = longitude
+				Severity = (int)BumpSeverity.None,
+				Latitude = latitude,
+				Longitude = longitude,
+				Active = false
 			};
 
-			await Table.DeleteAsync(item);
+			await Table.InsertAsync(item);
 		}
 	}
 }
