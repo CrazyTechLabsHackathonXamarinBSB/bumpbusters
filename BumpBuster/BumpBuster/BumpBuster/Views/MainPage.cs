@@ -27,7 +27,7 @@ namespace BumpBuster.Views
 
 		public MainPage()
 		{
-			var pos = new Xamarin.Forms.Maps.Position (-15, -47);
+			var pos = new Xamarin.Forms.Maps.Position (-15.8046057, -47.896674);
 			var Span = MapSpan.FromCenterAndRadius (pos, Distance.FromMiles (0.3));
 			map = new Map (Span){ 
 				IsShowingUser = true,
