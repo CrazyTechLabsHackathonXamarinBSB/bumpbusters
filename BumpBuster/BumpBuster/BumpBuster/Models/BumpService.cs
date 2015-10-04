@@ -23,7 +23,7 @@ namespace BumpBuster.Models
 			return await Table.ToListAsync ();
 		}
 
-		public async Task Add(double latidute, double longitude, BumpSeverity severity) {
+		public async Task AddAsync(double latidute, double longitude, BumpSeverity severity) {
 			var item = new Bump {
 				Severity = severity,
 				Latitude = latidute,
@@ -33,7 +33,7 @@ namespace BumpBuster.Models
 			await Table.InsertAsync(item);
 		}
 
-		public async Task Delete(double latidute, double longitude) {
+		public async Task DeleteAsync(double latidute, double longitude) {
 			var item = new Bump {
 				Severity = BumpSeverity.None,
 				Latitude = latidute,

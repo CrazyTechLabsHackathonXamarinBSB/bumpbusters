@@ -4,10 +4,9 @@ namespace BumpBuster.Models
 {
 	public class Bump
 	{
-		public Bump ()
-		{
-			
-
+		public string Id {
+			get;
+			set;
 		}
 
 		public double Latitude {

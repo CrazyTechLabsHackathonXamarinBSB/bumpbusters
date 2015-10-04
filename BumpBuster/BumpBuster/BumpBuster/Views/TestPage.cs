@@ -23,17 +23,11 @@ namespace BumpBuster
 			};
 		}
 
-		protected override void OnAppearing ()
+		protected override async void OnAppearing ()
 		{
-			base.OnAppearing ();
-
 			var service = new BumpService();
 
-			var list = service.ListAsync();
-			var result = list.Result;
-
-
-			// var result = new string[] { "Item 1" };
+			var result = await service.ListAsync();
 
 			listView.ItemsSource = result;
 		}
