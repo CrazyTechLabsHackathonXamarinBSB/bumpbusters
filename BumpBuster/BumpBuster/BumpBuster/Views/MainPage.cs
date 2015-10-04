@@ -9,6 +9,8 @@ using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using System.Diagnostics;
 using XLabs.Platform.Services.Geolocation;
+using XLabs.Platform.Device;
+using XLabs.Ioc;
 
 namespace BumpBuster.Views
 {
@@ -20,7 +22,6 @@ namespace BumpBuster.Views
 
 		public MainPage()
 		{
-			
 			map = new Map { 
 				IsShowingUser = true,
 				HeightRequest = 100,
@@ -90,6 +91,11 @@ namespace BumpBuster.Views
 
 		async Task GetPosition ()
 		{
+			// Inicia o Acelelometro
+			var device = Resolver.Resolve<IDevice>();
+			Debug.WriteLine (device.FirmwareVersion);
+
+
 			var geolocator = DependencyService.Get<IGeolocator> ();
 			//geolocator.PositionError += OnPositionError;
 			//geolocator.PositionChanged += OnPositionChanged;

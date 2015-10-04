@@ -17,6 +17,12 @@ namespace BumpBuster.Droid
             base.OnCreate(bundle);
 
 			Xamarin.Forms.DependencyService.Register<XLabs.Platform.Services.Geolocation.Geolocator> ();
+			//Xamarin.Forms.DependencyService.Register<XLabs.Platform.Device.AndroidDevice> ();
+
+			var container = new XLabs.Ioc.SimpleContainer ();
+			container.Register<XLabs.Platform.Device.IDevice, XLabs.Platform.Device.AndroidDevice> ();
+
+			XLabs.Ioc.Resolver.SetResolver (container.GetResolver ());
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
 			global::Xamarin.FormsMaps.Init(this, bundle);
