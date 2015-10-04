@@ -11,6 +11,7 @@ using System.Diagnostics;
 using XLabs.Platform.Services.Geolocation;
 using XLabs.Platform.Device;
 using XLabs.Ioc;
+using BumpBuster.Models;
 
 namespace BumpBuster.Views
 {
@@ -20,9 +21,15 @@ namespace BumpBuster.Views
 
 		Map map;
 
+		Double gForce;
+
+		IGeolocator geolocator;
+
 		public MainPage()
 		{
-			map = new Map { 
+			var pos = new Xamarin.Forms.Maps.Position (-15, -47);
+			var Span = MapSpan.FromCenterAndRadius (pos, Distance.FromMiles (0.3));
+			map = new Map (Span){ 
 				IsShowingUser = true,
 				HeightRequest = 100,
 				WidthRequest = 960,
@@ -62,7 +69,7 @@ namespace BumpBuster.Views
 
 			this.Content = new StackLayout
 			{
-				Children = {segments, map, slider}
+				Children = {map, segments, slider}
 
 			};
 
@@ -96,7 +103,7 @@ namespace BumpBuster.Views
 			Debug.WriteLine (device.FirmwareVersion);
 
 
-			var geolocator = DependencyService.Get<IGeolocator> ();
+			this.geolocator = DependencyService.Get<IGeolocator> ();
 			//geolocator.PositionError += OnPositionError;
 			//geolocator.PositionChanged += OnPositionChanged;
 
@@ -108,6 +115,66 @@ namespace BumpBuster.Views
 			string message = string.Format ("Latitude: {0} | Longitude: {1}", position.Latitude, position.Longitude);
 
 			Debug.WriteLine (message);
+
+			device.Accelerometer.ReadingAvailable += getEixos;
+
+
+		}
+
+		async private void getEixos(object sender, XLabs.EventArgs<XLabs.Vector3> e){
+			var x = e.Value.X;
+			var y = e.Value.Y;
+			var z = e.Value.Z;
+
+			gForce = Math.Sqrt ((x * x) + (y * y) + (z * z));
+
+			if (gForce > 2 && gForce <= 5) {
+
+				var service = new BumpService ();
+
+				var position = await this.geolocator.GetPositionAsync (timeout: 10000);
+
+				await service.AddAsync(position.Latitude, position.Longitude, (int)gForce);
+
+				var list = await service.ListAsync ();
+
+				foreach (var pino in list) {
+					SetPinOnMap (pino.Latitude, pino.Longitude, pino.Severity);
+				} 
+
+
+			}
+
+			Debug.WriteLine ("Forca G: " + gForce);
+
+		}
+
+
+		void SetPinOnMap(Double Latitude, Double Longitude, int severidade){
+
+
+			var position = new Xamarin.Forms.Maps.Position(Latitude, Longitude); // Latitude, Longitude
+
+			PinType pinType = new PinType();
+			if (severidade < 2) {
+				pinType = PinType.Place;
+			}else{
+				pinType = PinType.SavedPin;
+			}
+
+			var pin = new Pin {
+				Type = pinType,
+				Position = position,
+				Label = "Bump",
+				Address = "Endereco do defeito"
+			};
+
+
+
+			map.Pins.Add(pin);
+
+
+
 		}
 
 		void OnPositionError (object sender, PositionErrorEventArgs e) {

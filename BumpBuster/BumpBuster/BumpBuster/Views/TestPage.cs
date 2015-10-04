@@ -43,7 +43,7 @@ namespace BumpBuster
 					var longitude = double.Parse(longitudeEntry.Text);
 					var severity = int.Parse(severityEntry.Text);
 
-					await service.AddAsync(latitude, longitude, (BumpSeverity)severity);
+					await service.AddAsync(latitude, longitude, (int)severity);
 				} catch (Exception ex) {
 					Debug.WriteLine(ex.Message);
 					await DisplayAlert("Não foi possível executar a operação.", "Alerta", "Ok");
