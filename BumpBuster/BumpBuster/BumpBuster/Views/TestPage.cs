@@ -2,6 +2,8 @@
 using Xamarin.Forms;
 using BumpBuster.Models;
 
+using XLabs.Platform.Services.Geolocation;
+
 namespace BumpBuster
 {
 	public class TestPage : ContentPage
